@@ -1,0 +1,116 @@
+#include <stdio.h>
+
+void read(int a[10][10], int r, int c);
+void display(int a[10][10], int r, int c);
+void add(int a[10][10], int b[10][10], int result[10][10], int r, int c);
+void multiply(int a[10][10], int b[10][10], int result[10][10], int r1, int c1, int c2);
+void transpose(int a[01][10], int result[10][10], int r, int c);
+
+int main() {
+    int choice, r, c, c2;
+    int a[10][10], b[10][10], result[10][10];
+
+    while (1) {
+        printf("\nMatrix Operations:\n");
+        printf("1. Add Matrices\n");
+        printf("2. Multiply Matrices\n");
+        printf("3. Transpose Matrix\n");
+        printf("4. Exit\n");
+
+        printf("Enter your choice (1-4): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            
+
+            case 1:
+                printf("Enter rows: ");
+                scanf("%d", &r);
+                printf("Enter columns: ");
+                scanf("%d", &c);
+                printf("Matrix 1:\n");
+                read(a, r, c);
+                printf("Matrix 2:\n");
+                read(b, r, c);
+                add(a, b, result, r, c);
+                printf("Sum of Matrices:\n");
+                display(result, r, c);
+                break;
+
+            case 2:
+                printf("Enter rows for Matrix 1: ");
+                scanf("%d", &r);
+                printf("Enter columns for Matrix 1: ");
+                scanf("%d", &c);
+                printf("Enter columns for Matrix 2: ");
+                scanf("%d", &c2);
+                printf("Matrix 1:\n");
+                read(a, r, c);
+                printf("Matrix 2:\n");
+                read(b, c, c2);
+                multiply(a, b, result, r, c, c2);
+                printf("Product of Matrices:\n");
+                display(result, r, c2);
+                break;
+
+            case 3:
+                printf("Enter rows: ");
+                scanf("%d", &r);
+                printf("Enter columns: ");
+                scanf("%d", &c);
+                printf("Matrix:\n");
+                read(a, r, c);
+                transpose(a, result, r, c);
+                printf("Transpose of Matrix:\n");
+                display(result, c, r);
+                break;
+
+
+            case 4:
+                printf("Exiting...\n");
+                return 0;
+
+            default:
+                printf("Invalid choice! Please enter a number from 1 to 4.\n");
+                break;
+        }
+    }
+
+    return 0;
+}
+
+void read(int a[10][10], int r, int c) {
+    printf("Enter the elements of the matrix:\n");
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            scanf("%d", &a[i][j]);
+}
+
+void display(int a[10][10], int r, int c) {
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++)
+            printf("%d\t", a[i][j]);
+        printf("\n");
+    }
+}
+
+void add(int a[10][10], int b[10][10], int result[10][10], int r, int c) {
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            result[i][j] = a[i][j] + b[i][j];
+}
+
+void multiply(int a[10][10], int b[10][10], int result[10][10], int r1, int c1, int c2) {
+    for (int i = 0; i < r1; i++)
+        for (int j = 0; j < c2; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < c1; k++)
+                result[i][j] += a[i][k] * b[k][j];
+        }
+}
+
+void transpose(int a[10][10], int result[10][10], int r, int c) {
+    for (int j = 0; j < c; j++)
+        for (int i = 0; i < r; i++)
+            result[j][i] = a[i][j];
+}
